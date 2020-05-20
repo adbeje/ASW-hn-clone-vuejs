@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import New from '../views/New.vue';
+import Ask from '../views/Ask.vue';
 import Single from '../views/Single.vue';
 
 Vue.use(VueRouter)
@@ -23,7 +25,18 @@ Vue.use(VueRouter)
     path: '/contribution/:id',
     name: 'Single',
     component: Single
+  },
+  {
+    path: "/newest",
+    name: "New",
+    component: New
+  },
+  {
+    path: "/asks",
+    name: "Ask",
+    component: Ask
   }
+
 ]
 
 const router = new VueRouter({

@@ -6,7 +6,10 @@
       >
       <ul class="pure-menu-list">
         <li class="pure-menu-item">
-          <router-link class="pure-menu-link" to="/about">About</router-link>
+          <router-link class="pure-menu-link" to="/newest">News</router-link>
+        </li>
+        <li class="pure-menu-item">
+          <router-link class="pure-menu-link" to="/asks">Asks</router-link>
         </li>
       </ul>
     </div>

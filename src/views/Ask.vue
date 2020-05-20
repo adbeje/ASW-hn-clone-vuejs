@@ -9,7 +9,7 @@ import axios from "axios";
 import Item from "@/views/Item.vue";
 
 export default {
-  name: "New",
+  name: "Ask",
   components: {
     item: Item
   },
@@ -21,7 +21,7 @@ export default {
   },
     created: function() {
     axios
-      .get("https://salty-inlet-98667.herokuapp.com/api/news.json")
+      .get("https://salty-inlet-98667.herokuapp.com/api/asks.json")
       .then(result => {
         this.contributions = result.data;
         console.log(this.$store.state.articles);
