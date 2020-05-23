@@ -24,7 +24,16 @@ export default {
       .get("https://salty-inlet-98667.herokuapp.com/api/contribucions.json")
       .then(result => {
         this.contributions = result.data;
-        console.log(this.$store.state.articles);
+      })
+      .catch(err => {
+        this.err = err;
+      });
+
+    axios
+      .get("https://salty-inlet-98667.herokuapp.com/api/users/2.json")
+      .then(result => {
+        localStorage.setItem("userName", result.data.name);
+        console.log(localStorage.getItem("userName"));
       })
       .catch(err => {
         this.err = err;

@@ -11,15 +11,23 @@
         <li class="pure-menu-item">
           <router-link class="pure-menu-link" to="/asks">Asks</router-link>
         </li>
+        <li class="pure-menu-item">
+          {{userName}}
+        </li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-  
   export default {
-    name: "Navbar"
+    name: "Navbar",
+      data: function() {
+    return {
+      err: "",
+      userName: localStorage.getItem("userName")
+    };
+  }
   };
 </script>
 

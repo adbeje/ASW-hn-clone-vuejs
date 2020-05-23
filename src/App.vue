@@ -6,9 +6,11 @@
 </template>
 
 <script>
+  import {store} from "./store/store";
   import Navbar from "@/components/Navbar";
   export default {
     name: "App",
+    store,
     components: {
       Navbar
     }
