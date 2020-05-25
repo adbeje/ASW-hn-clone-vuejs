@@ -3,18 +3,46 @@
     <span class="score">{{ contribution.cached_votes_up}}</span>
     <router-link :to="{ path: '/contribution/' + contribution.id }">{{ contribution.title }}<span>{{ contribution.url | host }}</span></router-link><br/>
     <span class="meta">
-    by {{ contribution.user_id }} | {{ contribution.created_at }} Ago |  comments
+    by {{ userName }} | {{ contribution.created_at }} Ago |  comments {{ comments.length }}
     </span>
   </div>
 </template>
 
 <script>
-
+import axios from "axios";
 export default {
   name: 'Item',
   props: [
     'contribution'
-  ]
+  ],
+  data: function() {
+    return {
+      err: "",
+      userName: "",
+      comments: []
+    };
+  },
+  created: function() {
+      axios
+      .get("https://salty-inlet-98667.herokuapp.com/api/users/" + this.contribution.user_id + ".json")
+      .then(result => {
+        this.userName = result.data.name;
+        console.log(this.userName);
+      })
+      .catch(err => {
+        this.err = err;
+      });
+
+            axios
+      .get("https://salty-inlet-98667.herokuapp.com/api/comments/contribucions/" + this.contribution.id + ".json")
+      .then(result => {
+        this.comments = result.data;
+        console.log(this.comments.length);
+      })
+      .catch(err => {
+        this.err = err;
+      });
+  }
 }
 </script>
 
