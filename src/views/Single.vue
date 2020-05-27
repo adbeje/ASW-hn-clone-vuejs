@@ -3,28 +3,29 @@
     <h2>{{ contribution.title }}</h2>
     <p>Score: {{ contribution.cached_votes_up }}</p>
     <p>{{ contribution.url }}</p>
-    <div v-for="comment in comments" :key="comment.id">
-      <div class="comment-wrap">
-        <div class="comment-block">
-          <p class="comment-text">{{ comment.content }}</p>
-          <div class="bottom-comment">
-            <div class="comment-author">{{ comment.user_id }}</div>
-            <div class="comment-date">{{ comment.created_at }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <CommentItem v-for="comment in comments" :key="comment.id" :comment="comment">></CommentItem>
   </div>
 </template>
 
 <script>
+    import moment from 'moment'
+    import CommentItem from '@/views/CommentItem.vue'
     import axios from "axios";
     export default {
     name: "Single",
+    components: {
+    'CommentItem': CommentItem
+  },
+
+  methods: {
+    moment
+  },
+
     data: function() {
         return {
         contribution: {},
-        comments: []
+        comments: [],
+        userNamesComment: [],
         };
     },
     created: function() {

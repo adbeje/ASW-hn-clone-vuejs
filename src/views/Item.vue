@@ -1,27 +1,47 @@
 <template>
   <div class="story">
     <span class="score">{{ contribution.cached_votes_up}}</span>
-    <router-link :to="{ path: '/contribution/' + contribution.id }">{{ contribution.title }}<span>{{ contribution.url | host }}</span></router-link><br/>
+    <div v-if="contribution.url"><a :href="contribution.url" target="_blank"><a>{{ contribution.title }}</a></a>
+    <span class="host">
+      ({{ getHost(contribution.url)}})
+    </span></div>
+    <div v-else><router-link :to="{ path: '/contribution/' + contribution.id }">{{ contribution.title }}</router-link></div>
     <span class="meta">
-    by {{ userName }} | {{ contribution.created_at }} Ago |  comments {{ comments.length }}
+    by <router-link :to="'/user/' + contribution.user_id">{{ userName }}</router-link> | {{ moment(contribution.created_at).fromNow() }} | 
+    <router-link :to="{ path: '/contribution/' + contribution.id }">{{ comments.length }} comments </router-link>
     </span>
   </div>
 </template>
 
 <script>
+
+import moment from 'moment'
+
 import axios from "axios";
+
 export default {
   name: 'Item',
   props: [
     'contribution'
   ],
+	methods: {
+  getHost(href){
+  return Object.assign(document.createElement('a'), { href }).host
+  },
+  moment,
+  },
+
   data: function() {
     return {
       err: "",
       userName: "",
-      comments: []
+      comments: [],
+      myDate: null // Set to whatever
     };
   },
+
+
+
   created: function() {
       axios
       .get("https://salty-inlet-98667.herokuapp.com/api/users/" + this.contribution.user_id + ".json")
@@ -33,7 +53,7 @@ export default {
         this.err = err;
       });
 
-            axios
+      axios
       .get("https://salty-inlet-98667.herokuapp.com/api/comments/contribucions/" + this.contribution.id + ".json")
       .then(result => {
         this.comments = result.data;
@@ -44,6 +64,8 @@ export default {
       });
   }
 }
+
+
 </script>
 
 <style scoped>
