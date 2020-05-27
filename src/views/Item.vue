@@ -27,7 +27,7 @@ export default {
       .get("https://salty-inlet-98667.herokuapp.com/api/users/" + this.contribution.user_id + ".json")
       .then(result => {
         this.userName = result.data.name;
-        console.log(this.userName);
+        //console.log(this.userName);
       })
       .catch(err => {
         this.err = err;
@@ -37,7 +37,7 @@ export default {
       .get("https://salty-inlet-98667.herokuapp.com/api/comments/contribucions/" + this.contribution.id + ".json")
       .then(result => {
         this.comments = result.data;
-        console.log(this.comments.length);
+        //console.log(this.comments.length);
       })
       .catch(err => {
         this.err = err;
