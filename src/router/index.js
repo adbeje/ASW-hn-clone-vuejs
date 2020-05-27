@@ -4,6 +4,9 @@ import Home from '../views/Home.vue'
 import New from '../views/New.vue';
 import Ask from '../views/Ask.vue';
 import Single from '../views/Single.vue';
+import User from '../views/User.vue';
+import UserContributions from '../views/UserContributions.vue';
+import UserComments from '../views/UserComments.vue';
 
 Vue.use(VueRouter)
 
@@ -35,6 +38,23 @@ Vue.use(VueRouter)
     path: "/asks",
     name: "Ask",
     component: Ask
+  },
+  {
+    path: '/user/:id',
+    name: 'User',
+    component: User
+  },
+
+  {
+    path: '/contribucions/users/:id',
+    name: 'UserContributions',
+    component: UserContributions
+  },
+
+  {
+    path: '/comments/users/:id',
+    name: 'UserComments',
+    component: UserComments
   }
 
 ]
