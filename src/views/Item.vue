@@ -3,19 +3,30 @@
     <span class="score">{{ contribution.cached_votes_up}}</span>
     <router-link :to="{ path: '/contribution/' + contribution.id }">{{ contribution.title }}<span>{{ contribution.url | host }}</span></router-link><br/>
     <span class="meta">
-    by {{ contribution.user_id }} | {{ contribution.created_at }} Ago |  comments
+    by <router-link :to="'/user/' + contribution.user_id">{{ contribution.user_id }}</router-link> | {{ moment(contribution.created_at).fromNow() }} | comments
     </span>
   </div>
 </template>
 
 <script>
 
+import moment from 'moment'
+
 export default {
   name: 'Item',
   props: [
     'contribution'
-  ]
+  ],
+	data () {
+	return {
+		myDate: null // Set to whatever
+	};
+  },
+	methods: {
+	moment
+  }
 }
+
 </script>
 
 <style scoped>

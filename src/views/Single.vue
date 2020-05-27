@@ -24,7 +24,8 @@
     data: function() {
         return {
         contribution: {},
-        comments: []
+        comments: [],
+        commentsSize: 0
         };
     },
     created: function() {
@@ -38,12 +39,14 @@
             this.contribution = res.data;
             //console.log(res.data);
             this.contribution.comments = [];
+            this.contributions.commentsSize = 0;
             axios
                 .get("https://salty-inlet-98667.herokuapp.com/api/comments/contribucions/" + this.$route.params.id + ".json")
                 .then(res => {
                 this.$nextTick(() => {
                     //console.log(res.data);
                     this.comments = res.data;
+                    this.contribution.commentsSize++;
                 });
                 })
                 .catch(err => {
