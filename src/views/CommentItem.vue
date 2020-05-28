@@ -1,7 +1,11 @@
 <template>
   <div class="story">
    <div><a >{{ comment.content }}</a></div>
+
     <div class="meta">
+        <button style="height:30px;width:15px" v-on:click="upvoteComment()">▲</button>
+        <button class="up_button" v-on:click="downVoteComment()">▼</button> 
+        {{ comment.cached_votes_up }} points | 
     by <router-link :to="'/user/' + comment.user_id">{{ userName }}</router-link> | {{ moment(comment.created_at).fromNow() }}
   </div>
   <br>
@@ -33,6 +37,28 @@ components: {
   ],
 	methods: {
   moment,
+      upVoteComment() {
+      axios.put('https://salty-inlet-98667.herokuapp.com/api/comments/vote/' + this.contribution.id, {
+        apiKey: localStorage.getItem('apiToken')
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    },
+    downVoteComment() {
+      axios.put('https://salty-inlet-98667.herokuapp.com/api/comments/downvote/' + this.contribution.id, {
+        apiKey: localStorage.getItem('apiToken')
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    },
 
     addReply() {
       axios.post('https://salty-inlet-98667.herokuapp.com/api/replies/comments/' + this.comment.id , {
@@ -41,9 +67,9 @@ components: {
         })
         .then(response => {
           console.log(response.data);
-          alert("Your reply has been submited.")
+          alert("Your reply has been submited.");
           location.reload();
-        })
+           })
         .catch(err => {
           console.log(err);
         });
@@ -61,6 +87,7 @@ components: {
   },
 
   created: function() {
+    console.log(comment.cached_votes_up);
       axios
       .get("https://salty-inlet-98667.herokuapp.com/api/users/" + this.comment.user_id + ".json")
       .then(result => {

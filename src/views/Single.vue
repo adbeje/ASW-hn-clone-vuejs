@@ -1,19 +1,20 @@
 <template>
   <div class="container">
-    <p>Score: {{ contribution.cached_votes_up }}</p>
     <div v-if="contribution.url">
       <a :href="contribution.url" target="_blank"><h2>{{ contribution.title }} ({{ getHost(contribution.url)}})</h2></a>
     </div>
     <div v-else>
       <h2>{{ contribution.title }}</h2>
-      <span class="meta">
+      <p>{{ contribution.text }}</p>
+    </div>
+    <span class="meta">
         <button class="up_button" v-on:click="upVoteContribution(contribution.id)">▲</button>
         <button class="up_button" v-on:click="downVoteContribution(contribution.id)">▼</button>
+      {{ contribution.cached_votes_up }} points | 
+
         by <router-link :to="'/user/' + contribution.user_id">{{ userName }}</router-link> | {{ moment(contribution.created_at).fromNow() }} | 
         {{ comments.length }} comments
       </span>
-      <p>{{ contribution.text }}</p>
-    </div>
     <p>{{ contribution.url }}</p>
         <div>
           <textarea v-model="newComment" placeholder="add a comment" maxlength="100" rows="10" cols="50"> newComment</textarea>
@@ -48,6 +49,8 @@
       })
       .then(response => {
         console.log(response.data);
+        location.reload();
+
       })
       .catch(err => {
         console.log(err);
@@ -59,6 +62,8 @@
       })
       .then(response => {
         console.log(response.data);
+        location.reload();
+
       })
       .catch(err => {
         console.log(err);
@@ -73,6 +78,7 @@
         .then(response => {
           console.log(response.data);
           alert("Your contribution has been submited.")
+          location.reload();
         })
         .catch(err => {
           console.log(err);

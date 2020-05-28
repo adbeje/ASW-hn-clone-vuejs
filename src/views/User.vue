@@ -57,6 +57,7 @@
       .then(response => {
         console.log(response.data);
         alert("Your information has been updated.")
+        location.reload();
       })
       .catch(err => {
         console.log(err);
