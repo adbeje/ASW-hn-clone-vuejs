@@ -3,59 +3,31 @@
    <div><a >{{ comment.content }}</a></div>
     <div class="meta">
     by <router-link :to="'/user/' + comment.user_id">{{ userName }}</router-link> | {{ moment(comment.created_at).fromNow() }}
+    | <router-link :to="'/contribution/' + comment.contribucion_id">{{ "parent" }}</router-link>
   </div>
-  <br>
-    <div>
-      <textarea v-model="newReply" placeholder="add a reply" maxlength="100" rows="5" cols="25"> newReply</textarea>
-    </div>
-    <br>
-    <div>
-      <button v-on:click="addReply()">Add reply</button>
-    </div>
-    <br>
-  <ReplyItem v-for="reply in replies" :key="reply.id" :reply="reply">></ReplyItem>
   </div>
 </template>
 
 <script>
 
 import moment from 'moment'
-import ReplyItem from '@/views/ReplyItem.vue'
 import axios from "axios";
 
 export default {
   name: 'CommentItem',
 components: {
-    'ReplyItem': ReplyItem
 },
   props: [
     'comment'
   ],
-	methods: {
+methods: {
   moment,
-
-    addReply() {
-      axios.post('https://salty-inlet-98667.herokuapp.com/api/replies/comments/' + this.comment.id , {
-          apiKey: localStorage.getItem('apiToken'),
-          content: this.newReply
-        })
-        .then(response => {
-          console.log(response.data);
-          alert("Your reply has been submited.")
-          location.reload();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      }
   },
 
   data: function() {
     return {
       err: "",
       userName: "",
-      replies: [],
-      newReply: "",
       myDate: null // Set to whatever
     };
   },
@@ -66,15 +38,6 @@ components: {
       .then(result => {
         this.userName = result.data.name;
         })
-      .catch(err => {
-        this.err = err;
-      });
-
-        axios
-      .get("https://salty-inlet-98667.herokuapp.com/api/replies/comments/" + this.comment.id + ".json")
-      .then(result => {
-        this.replies = result.data;
-      })
       .catch(err => {
         this.err = err;
       });

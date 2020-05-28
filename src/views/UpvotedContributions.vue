@@ -1,27 +1,30 @@
 <template>
+<div>
   <div class="container">
-    <item v-for="contribution in contributions" :key="contribution.id" :contribution="contribution"></item>
+    <h1> Upvoted contribucions: </h1>
+    <Item v-for="contribution in contributions" :key="contribution.id" :contribution="contribution"></Item>
   </div>
+</div>
 </template>
 
 <script>
 import Item from '@/views/Item.vue'
 import axios from "axios";
 export default {
-  name: 'home',
+  name: 'UpvotedContributions',
   components: {
-    'item': Item
+    'Item': Item,
   },
   data: function() {
     return {
       err: "",
-      contributions: []
+      contributions: [],
     };
   },
 
   created: function() {
     axios
-      .get("https://salty-inlet-98667.herokuapp.com/api/contribucions/users/" + this.$route.params.id +
+      .get("https://salty-inlet-98667.herokuapp.com/api/contribucions/upvoted/users/" + localStorage.getItem("userID") +
             ".json")
       .then(result => {
         this.contributions = result.data;

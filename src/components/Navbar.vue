@@ -11,6 +11,12 @@
         <li class="pure-menu-item">
           <router-link class="pure-menu-link" to="/asks">Asks</router-link>
         </li>
+        <li class="pure-menu-item">
+          <router-link class="pure-menu-link" to="/threads">Threads</router-link>
+        </li>
+        <li class="pure-menu-item">
+          <router-link class="pure-menu-link" to="/submit">Submit</router-link>
+        </li>
         <li class="pure-menu-item" v-if= isConnected>
           <router-link class="pure-menu-link" :to="'/user/' + userID">{{userName}}({{karma}})</router-link>
         </li>
