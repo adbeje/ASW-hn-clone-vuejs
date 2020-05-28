@@ -7,6 +7,7 @@ import Single from '../views/Single.vue';
 import User from '../views/User.vue';
 import UserContributions from '../views/UserContributions.vue';
 import UserComments from '../views/UserComments.vue';
+import Threads from '../views/Threads.vue';
 
 Vue.use(VueRouter)
 
@@ -55,6 +56,12 @@ Vue.use(VueRouter)
     path: '/comments/users/:id',
     name: 'UserComments',
     component: UserComments
+  },
+
+  {
+    path: '/threads',
+    name: 'Threads',
+    component: Threads
   }
 
 ]

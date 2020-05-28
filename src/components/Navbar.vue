@@ -12,6 +12,12 @@
           <router-link class="pure-menu-link" to="/asks">Asks</router-link>
         </li>
         <li class="pure-menu-item">
+          <router-link class="pure-menu-link" to="/threads">Threads</router-link>
+        </li>
+        <li class="pure-menu-item" v-if= isConnected>
+          <router-link class="pure-menu-link" :to="'/user/' + userID">{{userName}}({{karma}})</router-link>
+        </li>
+        <li class="pure-menu-item">
           <facebook-login class="button"
             appId="727005264774100"
             @login="onLogin"
