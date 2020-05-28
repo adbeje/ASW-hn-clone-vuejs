@@ -1,17 +1,17 @@
 <template>
   <div class="container">
       <div class = "user-view">
-        <li><span class="label">Title:</span>
+        <div><span class="label">Title:</span>
           <input type="text" v-model="title" size="50" placeholder="add a title" title>
-          </li>
+        </div>
         <br>
-        <li><span class="label">Url:</span>
+        <div><span class="label">Url:</span>
           <input type="text" v-model="url" size="50" placeholder="add an url" url>
-        </li>
+        </div>
         <br>
-        <li><span class="label">Text:</span>
+        <div><span class="label">Text:</span>
           <textarea v-model="text" placeholder="add a text" maxlength="100" rows="10" cols="50"> text</textarea>
-        </li>
+        </div>
         <pre>
           
         </pre>

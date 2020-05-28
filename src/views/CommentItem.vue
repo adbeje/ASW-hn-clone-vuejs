@@ -98,7 +98,7 @@ components: {
         this.err = err;
       });
 
-        axios
+      axios
       .get("https://salty-inlet-98667.herokuapp.com/api/replies/comments/" + this.comment.id + ".json")
       .then(result => {
         this.replies = result.data;

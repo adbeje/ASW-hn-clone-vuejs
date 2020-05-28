@@ -14,16 +14,18 @@
 
         by <router-link :to="'/user/' + contribution.user_id">{{ userName }}</router-link> | {{ moment(contribution.created_at).fromNow() }} | 
         {{ comments.length }} comments
-      </span>
-    <p>{{ contribution.url }}</p>
-        <div>
-          <textarea v-model="newComment" placeholder="add a comment" maxlength="100" rows="10" cols="50"> newComment</textarea>
-        </div>
-        <br>
-        <button v-on:click="addComment()">Add comment</button>
-        <pre>
-          
-        </pre>
+    </span>
+    <pre>
+      
+    </pre>
+    <div>
+      <textarea v-model="newComment" placeholder="add a comment" maxlength="100" rows="10" cols="50"> newComment</textarea>
+    </div>
+    <br>
+    <button v-on:click="addComment()">Add comment</button>
+    <pre>
+      
+    </pre>
     <CommentItem v-for="comment in comments" :key="comment.id" :comment="comment">></CommentItem>
   </div>
 </template>
