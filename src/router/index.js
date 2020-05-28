@@ -8,6 +8,10 @@ import User from '../views/User.vue';
 import UserContributions from '../views/UserContributions.vue';
 import UserComments from '../views/UserComments.vue';
 import Threads from '../views/Threads.vue';
+import UpvotedContributions from '../views/UpvotedContributions.vue';
+import UpvotedComments from '../views/UpvotedComments.vue';
+import Submit from '../views/Submit.vue';
+
 
 Vue.use(VueRouter)
 
@@ -62,7 +66,26 @@ Vue.use(VueRouter)
     path: '/threads',
     name: 'Threads',
     component: Threads
+  },
+
+  {
+    path: '/upvoted/contribucions',
+    name: 'UpvotedContributions',
+    component: UpvotedContributions
+  },
+
+  {
+    path: '/upvoted/comments',
+    name: 'UpvotedComments',
+    component: UpvotedComments
+  },
+
+  {
+    path: '/submit',
+    name: 'Submit',
+    component: Submit
   }
+
 
 ]
 

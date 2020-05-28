@@ -1,16 +1,16 @@
 <template>
   <div class="container">
-    <CommentItem v-for="comment in comments" :key="comment.id" :comment="comment"></CommentItem>
+    <CommentThread v-for="comment in comments" :key="comment.id" :comment="comment"></CommentThread>
   </div>
 </template>
 
 <script>
-import CommentItem from '@/views/CommentItem.vue'
+import CommentThread from '@/views/CommentThread.vue'
 import axios from "axios";
 export default {
   name: 'home',
   components: {
-    'CommentItem': CommentItem
+    'CommentThread': CommentThread
   },
   data: function() {
     return {
@@ -25,16 +25,6 @@ export default {
             ".json")
       .then(result => {
         this.comments = result.data;
-      })
-      .catch(err => {
-        this.err = err;
-      });
-
-    axios
-      .get("https://salty-inlet-98667.herokuapp.com/api/users/2.json")
-      .then(result => {
-        localStorage.setItem("userName", result.data.name);
-        console.log(localStorage.getItem("userName"));
       })
       .catch(err => {
         this.err = err;

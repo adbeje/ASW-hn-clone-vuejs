@@ -23,6 +23,12 @@
           
         </pre>
         <span class="meta">
+        <div v-if = "user.id == userID" class="meta">
+        <router-link :to="'/upvoted/contribucions'">{{ "upvoted contributions" }}</router-link>
+        <br>
+        <router-link :to="'/upvoted/comments'">{{ "upvoted comments" }}</router-link>
+        <br>
+        </div>
         <router-link :to="'/contribucions/users/' + user.id">{{ "submissions" }}</router-link>
         <br>
         <router-link :to="'/comments/users/' + user.id">{{ "comments" }}</router-link>

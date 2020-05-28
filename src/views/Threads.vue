@@ -1,40 +1,37 @@
 <template>
 <div>
   <div class="container">
-    <h1> Contributions: </h1>
-    <br>
-    <Item v-for="contribution in contributions" :key="contribution.id" :contribution="contribution"></Item>
+    <h1> Comments: </h1>
+    <CommentThread v-for="comment in comments" :key="comment.id" :comment="comment"></CommentThread>
   </div>
    <div class="container">
-    <h1> Comments: </h1>
-    <br>
-    <CommentItem v-for="comment in comments" :key="comment.id" :comment="comment"></CommentItem>
+    <h1> Replies: </h1>
+    <ReplyThread v-for="reply in replies" :key="reply.id" :reply="reply"></ReplyThread>
    </div>
   </div>
 </template>
 
 <script>
-import CommentItem from '@/views/CommentItem.vue'
-import Item from '@/views/Item.vue'
+import ReplyThread from '@/views/ReplyThread.vue'
+import CommentThread from '@/views/CommentThread.vue'
 import axios from "axios";
 export default {
-  name: 'home',
+  name: 'Threads',
   components: {
-    'CommentItem': CommentItem,
-    'Item': Item   
+    'CommentThread': CommentThread,
+    'ReplyThread': ReplyThread   
   },
   data: function() {
     return {
       err: "",
       comments: [],
-      contributions: []
-
+      replies: []
     };
   },
 
   created: function() {
     axios
-      .get("https://salty-inlet-98667.herokuapp.com/api/comments/users/" + localStorage.getItem("userId") +
+      .get("https://salty-inlet-98667.herokuapp.com/api/comments/users/" + localStorage.getItem("userID") +
             ".json")
       .then(result => {
         this.comments = result.data;
@@ -44,20 +41,10 @@ export default {
       });
 
          axios
-      .get("https://salty-inlet-98667.herokuapp.com/api/contribucions/users/" + localStorage.getItem("userId") +
+      .get("https://salty-inlet-98667.herokuapp.com/api/replies/users/" + localStorage.getItem("userID") +
             ".json")
       .then(result => {
-        this.contributions = result.data;
-      })
-      .catch(err => {
-        this.err = err;
-      });
-
-    axios
-      .get("https://salty-inlet-98667.herokuapp.com/api/users/2.json")
-      .then(result => {
-        localStorage.setItem("userName", result.data.name);
-        console.log(localStorage.getItem("userName"));
+        this.replies = result.data;
       })
       .catch(err => {
         this.err = err;

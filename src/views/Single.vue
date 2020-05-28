@@ -3,6 +3,14 @@
     <h2>{{ contribution.title }}</h2>
     <p>Score: {{ contribution.cached_votes_up }}</p>
     <p>{{ contribution.url }}</p>
+        <div>
+          <textarea v-model="newComment" placeholder="add a comment" maxlength="100" rows="10" cols="50"> newComment</textarea>
+        </div>
+        <br>
+        <button v-on:click="addComment()">Add comment</button>
+        <pre>
+          
+        </pre>
     <CommentItem v-for="comment in comments" :key="comment.id" :comment="comment">></CommentItem>
   </div>
 </template>
@@ -18,7 +26,21 @@
   },
 
   methods: {
-    moment
+    moment,
+
+    addComment() {
+      axios.post('https://salty-inlet-98667.herokuapp.com/api/comments/contribucions/' + this.contribution.id , {
+          apiKey: localStorage.getItem('apiToken'),
+          content: this.newComment
+        })
+        .then(response => {
+          console.log(response.data);
+          alert("Your contribution has been submited.")
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
   },
 
     data: function() {
@@ -26,6 +48,7 @@
         contribution: {},
         comments: [],
         userNamesComment: [],
+        newComment: "",
         };
     },
     created: function() {
