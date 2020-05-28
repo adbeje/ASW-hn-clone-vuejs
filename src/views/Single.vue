@@ -107,7 +107,7 @@
             .get("https://salty-inlet-98667.herokuapp.com/api/users/" + this.contribution.user_id + ".json")
             .then(result => {
               this.userName = result.data.name;
-              console.log(this.userName);
+              //console.log(this.userName);
             })
             .catch(err => {
               this.err = err;
@@ -130,7 +130,6 @@
         .catch(err => {
             console.log(err);
       });
-      console.log("ASTOR GARCIA" + this.contribution.user_id)
 
 
     }

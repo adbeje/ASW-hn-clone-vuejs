@@ -37,43 +37,44 @@ components: {
   ],
 	methods: {
   moment,
-      upVoteComment() {
-      axios.put('https://salty-inlet-98667.herokuapp.com/api/comments/vote/' + this.contribution.id, {
-        apiKey: localStorage.getItem('apiToken')
-      })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    },
-    downVoteComment() {
-      axios.put('https://salty-inlet-98667.herokuapp.com/api/comments/downvote/' + this.contribution.id, {
-        apiKey: localStorage.getItem('apiToken')
-      })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    },
+  upvoteComment() {
+  axios.put('https://salty-inlet-98667.herokuapp.com/api/comments/vote/' + this.comment.id, {
+    apiKey: localStorage.getItem('apiToken')
+  })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  },
+  
+  downVoteComment() {
+    axios.put('https://salty-inlet-98667.herokuapp.com/api/comments/downvote/' + this.comment.id, {
+      apiKey: localStorage.getItem('apiToken')
+    })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  },
 
-    addReply() {
-      axios.post('https://salty-inlet-98667.herokuapp.com/api/replies/comments/' + this.comment.id , {
-          apiKey: localStorage.getItem('apiToken'),
-          content: this.newReply
-        })
-        .then(response => {
-          console.log(response.data);
-          alert("Your reply has been submited.");
-          location.reload();
-           })
-        .catch(err => {
-          console.log(err);
-        });
-      }
+  addReply() {
+    axios.post('https://salty-inlet-98667.herokuapp.com/api/replies/comments/' + this.comment.id , {
+        apiKey: localStorage.getItem('apiToken'),
+        content: this.newReply
+      })
+      .then(response => {
+        console.log(response.data);
+        alert("Your reply has been submited.");
+        location.reload();
+          })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   },
 
   data: function() {
@@ -87,7 +88,7 @@ components: {
   },
 
   created: function() {
-    console.log(comment.cached_votes_up);
+    console.log(this.comment);
       axios
       .get("https://salty-inlet-98667.herokuapp.com/api/users/" + this.comment.user_id + ".json")
       .then(result => {
