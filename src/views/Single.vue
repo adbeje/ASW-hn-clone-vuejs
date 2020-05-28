@@ -139,6 +139,11 @@
 </script>
 
 <style scoped>
+.up_button{
+  color: #fff;
+  background-color: #f60;
+  border-color: rgb(177, 71, 0);
+}
 .comment-wrap {
   margin-bottom: 1.25rem;
   display: table;
@@ -186,6 +191,7 @@
   display: inline;
   margin: -2px;
   cursor: pointer;
+  color: #ff7b00;
 }
 .comment-actions li.complain {
   padding-right: 0.75rem;
@@ -196,6 +202,18 @@
   padding-right: 0.125rem;
 }
 .comment-actions li:hover {
-  color: #0095ff;
+  color: #ff7b00;
+}
+/* A link that has not been visited */
+a:link {
+    color: #e17842;
+}
+/* A link that has been visited */
+a:visited {
+    color: orange;
+}
+/* A link that is hovered on */
+a:hover {
+    color: #ff7b00;
 }
 </style>

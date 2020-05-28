@@ -3,7 +3,7 @@
    <div><a >{{ comment.content }}</a></div>
 
     <div class="meta">
-        <button style="height:30px;width:15px" v-on:click="upvoteComment()">▲</button>
+        <button class="up_button" v-on:click="upvoteComment()">▲</button>
         <button class="up_button" v-on:click="downVoteComment()">▼</button> 
         {{ comment.cached_votes_up }} points | 
     by <router-link :to="'/user/' + comment.user_id">{{ userName }}</router-link> | {{ moment(comment.created_at).fromNow() }}
@@ -43,6 +43,7 @@ components: {
   })
     .then(response => {
       console.log(response.data);
+      location.reload();
     })
     .catch(err => {
       console.log(err);
@@ -55,6 +56,7 @@ components: {
     })
     .then(response => {
       console.log(response.data);
+      location.reload();
     })
     .catch(err => {
       console.log(err);
@@ -88,7 +90,6 @@ components: {
   },
 
   created: function() {
-    console.log(this.comment);
       axios
       .get("https://salty-inlet-98667.herokuapp.com/api/users/" + this.comment.user_id + ".json")
       .then(result => {
@@ -118,6 +119,11 @@ components: {
   border-bottom: 1px solid #eee;
   position: relative;
   line-height: 20px;
+}
+.up_button{
+  color: #fff;
+  background-color: #f60;
+  border-color: rgb(177, 71, 0);
 }
 .story a {
   color: #34495e;

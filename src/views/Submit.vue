@@ -34,12 +34,12 @@
   },
   methods: {
     submitContribution() {
-      if (this.title == "") alert("No has puesto titulo");
+      if (this.title == "") alert("Title is required");
       if (this.url == "" && this.text == "") {
-        alert("Tienes que poner url o text");
+        alert("URL or text is required");
       }
       if (this.url !== "" && this.text !== "") {
-        alert("Solo puede haber url o text lleno");
+        alert("Only one can be filled");
       }
 
       axios.post('https://salty-inlet-98667.herokuapp.com/api/contribucions/', {
@@ -54,7 +54,7 @@
           this.$router.push('/contribution/' + response.data.id);
         })
         .catch(err => {
-          console.log(err);
+          if (err.response.status == 422) alert("URL has already been published");
         });
       }
   }

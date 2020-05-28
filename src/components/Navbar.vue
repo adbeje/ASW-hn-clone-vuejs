@@ -11,7 +11,7 @@
         <li class="pure-menu-item">
           <router-link class="pure-menu-link" to="/asks">Asks</router-link>
         </li>
-        <li class="pure-menu-item">
+        <li v-if = "userID" class="pure-menu-item">
           <router-link class="pure-menu-link" to="/threads">Threads</router-link>
         </li>
         <li class="pure-menu-item">

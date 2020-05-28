@@ -2,6 +2,9 @@
   <div class="reply">
    <div><a >{{ reply.content }}</a></div>
     <div class="meta">
+        <button class="up_button" v-on:click="upvoteReply()">▲</button>
+        <button class="up_button" v-on:click="downVoteReply()">▼</button> 
+        {{ reply.cached_votes_up }} points | 
     by <router-link :to="'/user/' + reply.user_id">{{ userName }}</router-link> | {{ moment(reply.created_at).fromNow() }}
   </div>
   </div>
@@ -20,6 +23,31 @@ export default {
   ],
 	methods: {
   moment,
+    upvoteReply() {
+  axios.put('https://salty-inlet-98667.herokuapp.com/api/replies/vote/' + this.reply.id, {
+    apiKey: localStorage.getItem('apiToken')
+  })
+    .then(response => {
+      console.log(response.data);
+      location.reload();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  },
+  
+  downVoteReply() {
+    axios.put('https://salty-inlet-98667.herokuapp.com/api/replies/downvote/' + this.reply.id, {
+      apiKey: localStorage.getItem('apiToken')
+    })
+    .then(response => {
+      console.log(response.data);
+      location.reload();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  },
   },
 
   data: function() {
@@ -56,6 +84,11 @@ export default {
   border-bottom: 1px solid #eee;
   position: relative;
   line-height: 20px;
+}
+.up_button{
+  color: #fff;
+  background-color: #f60;
+  border-color: rgb(177, 71, 0);
 }
 .reply a {
   color: #34495e;
