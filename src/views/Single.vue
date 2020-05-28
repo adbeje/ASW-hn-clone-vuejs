@@ -1,8 +1,19 @@
 <template>
   <div class="container">
-    <h2>{{ contribution.title }}</h2>
     <p>Score: {{ contribution.cached_votes_up }}</p>
-    <p>{{ contribution.url }}</p>
+    <div v-if="contribution.url">
+      <a :href="contribution.url" target="_blank"><h2>{{ contribution.title }} ({{ getHost(contribution.url)}})</h2></a>
+    </div>
+    <div v-else>
+      <h2>{{ contribution.title }}</h2>
+      <span class="meta">
+        <button class="up_button" v-on:click="upVoteContribution(contribution.id)">▲</button>
+        <button class="up_button" v-on:click="downVoteContribution(contribution.id)">▼</button>
+        by <router-link :to="'/user/' + contribution.user_id">{{ userName }}</router-link> | {{ moment(contribution.created_at).fromNow() }} | 
+        {{ comments.length }} comments
+      </span>
+      <p>{{ contribution.text }}</p>
+    </div>
     <CommentItem v-for="comment in comments" :key="comment.id" :comment="comment">></CommentItem>
   </div>
 </template>
@@ -18,25 +29,60 @@
   },
 
   methods: {
-    moment
+    moment,
+    getHost(href){
+    return Object.assign(document.createElement('a'), { href }).host
+    },
+    upVoteContribution(id) {
+      axios.put('https://salty-inlet-98667.herokuapp.com/api/contribucions/vote/' + id, {
+        apiKey: localStorage.getItem('apiToken')
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    },
+    downVoteContribution(id) {
+      axios.put('https://salty-inlet-98667.herokuapp.com/api/contribucions/downvote/' + id, {
+        apiKey: localStorage.getItem('apiToken')
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
   },
-
-    data: function() {
+  data: function() {
         return {
         contribution: {},
         comments: [],
         userNamesComment: [],
+        userName: "",
         };
     },
-    created: function() {
-        axios
-        .get(
+
+  created: function() {
+      axios.get(
             "https://salty-inlet-98667.herokuapp.com/api/contribucions/" +
             this.$route.params.id +
             ".json"
         )
-        .then(res => {
+      .then(res => {
             this.contribution = res.data;
+            axios
+            .get("https://salty-inlet-98667.herokuapp.com/api/users/" + this.contribution.user_id + ".json")
+            .then(result => {
+              this.userName = result.data.name;
+              console.log(this.userName);
+            })
+            .catch(err => {
+              this.err = err;
+              console.log(err);
+            });
             //console.log(res.data);
             this.contribution.comments = [];
             axios
@@ -53,9 +99,10 @@
         })
         .catch(err => {
             console.log(err);
-        });
-        console.log("Hola");
-        console.log(this.comments);
+      });
+      console.log("ASTOR GARCIA" + this.contribution.user_id)
+
+
     }
     };
 </script>

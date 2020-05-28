@@ -7,6 +7,8 @@
     </span></div>
     <div v-else><router-link :to="{ path: '/contribution/' + contribution.id }">{{ contribution.title }}</router-link></div>
     <span class="meta">
+    <button class="up_button" v-on:click="upVoteContribution()">▲</button>
+    <button class="up_button" v-on:click="downVoteContribution()">▼</button>
     by <router-link :to="'/user/' + contribution.user_id">{{ userName }}</router-link> | {{ moment(contribution.created_at).fromNow() }} | 
     <router-link :to="{ path: '/contribution/' + contribution.id }">{{ comments.length }} comments </router-link>
     </span>
@@ -25,16 +27,39 @@ export default {
     'contribution'
   ],
 	methods: {
-  getHost(href){
-  return Object.assign(document.createElement('a'), { href }).host
-  },
-  moment,
+    getHost(href){
+    return Object.assign(document.createElement('a'), { href }).host
+    },
+    moment,
+    upVoteContribution() {
+      axios.put('https://salty-inlet-98667.herokuapp.com/api/contribucions/vote/' + this.contribution.id, {
+        apiKey: localStorage.getItem('apiToken')
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    },
+    downVoteContribution() {
+      axios.put('https://salty-inlet-98667.herokuapp.com/api/contribucions/downvote/' + this.contribution.id, {
+        apiKey: localStorage.getItem('apiToken')
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
   },
 
   data: function() {
     return {
       err: "",
       userName: "",
+      userID: localStorage.getItem("userID"),
       comments: [],
       myDate: null // Set to whatever
     };
@@ -86,6 +111,11 @@ export default {
   width: 80px;
   text-align: center;
   margin-top: -10px;
+}
+.up_button{
+  color: #fff;
+  background-color: #f60;
+  border-color: rgb(177, 71, 0);
 }
 .story a {
   color: #34495e;
