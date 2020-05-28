@@ -11,6 +11,9 @@
         <li class="pure-menu-item">
           <router-link class="pure-menu-link" to="/asks">Asks</router-link>
         </li>
+        <li class="pure-menu-item" v-if= isConnected>
+          <router-link class="pure-menu-link" :to="'/user/' + userID">{{userName}}({{karma}})</router-link>
+        </li>
         <li class="pure-menu-item">
           <router-link class="pure-menu-link" to="/threads">Threads</router-link>
         </li>
@@ -40,9 +43,9 @@
       return {
         err: "",
         userName: localStorage.getItem("userName"),
+        userID: localStorage.getItem("userID"),
+        karma: '',
         isConnected: false,
-        name: '',
-        email: '',
         FB: undefined
       };
     },
@@ -57,34 +60,26 @@
             this.name = user.name;
             console.log("Facebook email: " + this.email);
             console.log("Facebook name: " + this.name);
+
+            axios.post('https://salty-inlet-98667.herokuapp.com/api/users', {
+              name: user.name,
+              email: user.email
+            })
+            .then(response => {
+              console.log("Se ha ejecutado correctamente: ");
+              console.log(response.data);
+              localStorage.setItem("apiToken", response.data.apiKey);
+              localStorage.setItem("userName", response.data.name);
+              localStorage.setItem("userID", response.data.id);
+              this.karma = response.data.karma;
+            })
+            .catch(err => {
+            this.err = err;
+            console.log(this.email);
+            console.log(this.err);
+            });
           }
         )
-        axios.post('https://salty-inlet-98667.herokuapp.com/api/users/email/', {
-          email: 'adriaventura.herce@gmail.com'
-        })
-        .then(response => {
-          console.log("INICIO SESION" + this.email);
-          localStorage.setItem("userName", this.name);
-          localStorage.setItem("apiToken", response.data.apiKey);
-          localStorage.setItem("userId", response.data.id);
-          console.log(response.data.apiKey);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-
-        axios.post('https://salty-inlet-98667.herokuapp.com/api/users', {
-          name: this.name,
-          email: this.email
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(err => {
-        this.err = err;
-        console.log(this.email);
-        console.log(this.err.response.status);
-      });
       },
       sdkLoaded(payload) {
         this.isConnected = payload.isConnected
@@ -94,9 +89,14 @@
       onLogin() {
         this.isConnected = true
         this.getUserData()
+        //Para coger el karma del user
+
       },
       onLogout() {
         this.isConnected = false;
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userID");
+        localStorage.removeItem("apiToken");
       }
     }
   };
