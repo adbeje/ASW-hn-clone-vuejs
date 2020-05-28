@@ -19,7 +19,7 @@
 
 <style>
 body {
-    background-color: #f0f2fa;
+  background-color: #f0f2fa;
   font-family: "PT Sans", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
   color: #555f77;
   -webkit-font-smoothing: antialiased;
