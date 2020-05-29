@@ -20,5 +20,16 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Team Components
+
+* Daniel Clemente
+
+* Álvaro Trius
+
+* Oriol Catalán
+
+* Adrià Ventura
+
+## Web Deployment
+
+Firebase: `https://asw-hacker-news-clone-vuejs.web.app/`
